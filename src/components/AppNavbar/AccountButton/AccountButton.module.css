@@ -1,0 +1,14 @@
+.AccountButton {
+    background: none;
+    border: 2px solid #fffbfc;
+    border-radius: 30px;
+    color: #fffbfc;
+    height: 40px;
+    width: 100%;
+    min-width: 125px;
+}
+
+.AccountButton:hover{
+    background: #62BCC1;
+}
+
