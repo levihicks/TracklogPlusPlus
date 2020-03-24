@@ -1,0 +1,25 @@
+
+.Searchbar {
+    border-bottom: 3px solid #FFFBFC;
+    padding-bottom: 5px;
+    width: 80%;
+    margin: 50px 0;
+    display: flex;
+}
+
+.SearchLogo {
+    width: 15px;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.Searchbar input {
+    background: none;
+    color: #EC068E;
+    flex: 1;
+    border: none;
+}
+
+.Searchbar input::placeholder {
+    color: #EC068E;
+}

@@ -1,0 +1,25 @@
+.PopularRow {
+    width: auto;
+    padding: 20px;
+}
+
+.HeaderBlock {
+    height: 20px;
+    width: 10px;
+    background: #EC068E;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.Header {
+    font-size: 1.5rem;
+    color: #FFFBFC;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.Showcase {
+    margin-top: 10px;
+    display: flex;
+    font-size: .8rem;
+}

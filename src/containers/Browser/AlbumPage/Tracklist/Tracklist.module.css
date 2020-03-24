@@ -1,0 +1,11 @@
+.Tracklist {
+    margin: 20px 0;
+}
+
+.Track {
+    display: flex;
+    justify-content: space-between;
+    width: 75%;
+    padding: 20px 10px;
+    border-bottom: 1px solid #30332E;
+}

@@ -1,0 +1,36 @@
+.AlbumPage {
+    margin-top: 50px;
+    width: 100%;
+}
+
+.AlbumInfo {
+    margin-top: 25px;
+    display: flex;
+    
+}
+
+.AlbumTitle, .AlbumArtist {
+    color: #FFFBFC;
+    font-size: 1.75rem;
+    display: block;
+}
+
+.AlbumTitle {
+    font-weight: bold;
+}
+
+.AddRemoveButton {
+    height: 50px;
+    width: 50px;
+    background: #EC068E;
+    border: none;
+    border-radius: 16px;
+    display: flex;
+    cursor: pointer;
+}
+
+.AddRemoveIcon {
+    height: 25px;
+    margin: auto;
+}
+

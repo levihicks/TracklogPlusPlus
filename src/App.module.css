@@ -1,0 +1,15 @@
+.AppContainer {
+    display: flex; 
+    flex-direction: column;
+    height: 100vh;
+    max-height: 100vh;
+}
+
+.MainContent {
+    overflow: hidden;
+}
+
+.MCColumn {
+    height: 100%;
+    overflow: auto;
+}

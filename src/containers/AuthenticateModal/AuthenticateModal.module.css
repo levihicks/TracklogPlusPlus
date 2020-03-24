@@ -1,0 +1,61 @@
+.AuthenticateModal {
+    background: linear-gradient(34deg, #62BCC1 0%, #EC068E 100%);
+    border-radius: 100px; 
+    height: 400px;
+    width: 400px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 200;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;    
+}
+
+.AuthenticateRows {
+    display: flex;
+    justify-content: space-around;
+    align-content: space-around;
+}
+
+.AuthenticationHeaders {
+    color: #FFFBFC;
+    font-weight: bold;
+    
+}
+
+.AuthenticationHeaders div:hover {
+    cursor: pointer;
+    color: #62BCC1;
+}
+
+.AuthenticationInput {
+    border: none;
+    background: none;
+    border-bottom: 3px solid #010400;
+    color: #010400;
+    width: 80%;
+}
+
+.AuthenticationInput::placeholder {
+    color: #010400;
+}
+
+.CurrentView {
+    border-bottom: 2px solid #FFFBFC;
+    cursor: default !important;
+}
+
+.CurrentView:hover {
+    color: #FFFBFC !important;
+}
+
+.CompleteButton {
+    background: none;
+    border: 2px solid #FFFBFC;
+    border-radius: 20px;
+    color: #FFFBFC;
+    padding: 5px 15px;
+}

@@ -2,4 +2,6 @@
     background: transparent linear-gradient(274deg, #62BCC1 0%, #EC068E 100%) 0% 0% no-repeat padding-box;
     opacity: 1;
     height: 60px;
+    z-index: 100;
+    flex-shrink: 0;
 }

@@ -4,3 +4,7 @@ body {
   height: 100%;
   opacity: 1;
 }
+
+body * {
+  color: #FFFBFC;
+}

@@ -1,0 +1,31 @@
+.Album {
+    display: inline-block;
+    margin-right: 20px;
+
+}
+
+.AlbumCover {
+    height: 100px;
+    width: 100px;
+    background: #071A00;
+    display: block;
+}
+
+.AlbumCover img {
+    height: 100px;
+}
+
+.AlbumTitle, .AlbumArtist {
+    display: block;
+    width: 100px;
+    color: #FFFBFC;
+}
+
+.AlbumTitle {
+    font-weight: bold;
+}
+
+.AlbumTitle:hover {
+    cursor: pointer;
+    color: #62BCC1;
+}
