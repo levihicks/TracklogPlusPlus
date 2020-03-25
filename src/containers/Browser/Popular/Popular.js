@@ -5,17 +5,21 @@ import classes from './Popular.module.css';
 const POPULAR_CATEGORIES = ["Indie", "Pop", "Hip-Hop", "Electronic"];
 
 class Popular extends Component {
+    
+    shouldComponentUpdate () {
+        return false;
+    }
 
     render() {
         return (
-            <React.Fragment>
+            <div className={classes.Popular} style={this.props.style}>
                 <div className={classes.TopFiveHeader}>Top Five</div>
                 {POPULAR_CATEGORIES.map((cat)=>(
                     <PopularRow  
                     category={cat} 
                     key={Math.random().toString()}/>
                 ))}
-            </React.Fragment>
+            </div>
         );
     }
 }    

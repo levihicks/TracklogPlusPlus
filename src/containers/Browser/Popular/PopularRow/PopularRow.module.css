@@ -1,5 +1,5 @@
 .PopularRow {
-    width: auto;
+    width: 100%;
     padding: 20px;
 }
 
@@ -22,4 +22,6 @@
     margin-top: 10px;
     display: flex;
     font-size: .8rem;
+    max-width: 100%;
+    overflow-x: auto;
 }

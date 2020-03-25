@@ -4,6 +4,8 @@ import Add from '../../../assets/icons/add.svg'
 import Tracklist from './Tracklist/Tracklist';
 import classes from './AlbumPage.module.css';
 import axios from 'axios'; 
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import DefaultImg from '../../../assets/images/default_album_cover.png';
 class AlbumPage extends Component {
 
     state = {
@@ -20,16 +22,20 @@ class AlbumPage extends Component {
     }
 
     render () {
-        let albumPage = <p>Loading...</p>;
+        let albumPage = <div className={classes.AlbumPageSpinner}><Spinner /></div>;
+        
         if (this.state.albumInfo){
             const album = this.state.albumInfo;
+            let albumImg = album.image[5]["#text"];
+            if (!albumImg)
+                albumImg = DefaultImg;
             albumPage = (
                 <div className={classes.AlbumPage}>
                     <BackButton />
                     <div className={classes.AlbumInfo}>
                         <img
                         alt="Album" 
-                        src={album.image[5]["#text"]}
+                        src={albumImg}
                         />
                         <div style={{paddingLeft: "10px"}}>
                             <div className={classes.AlbumTitle}>{album.name}</div>

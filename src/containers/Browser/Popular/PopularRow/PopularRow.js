@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import classes from './PopularRow.module.css';
 import axios from 'axios';
 import Album from '../../../../components/Album/Album';
+import Spinner from '../../../../components/UI/Spinner/Spinner';
 
 class PopularRow extends Component {
 
@@ -18,7 +19,7 @@ class PopularRow extends Component {
     }
 
     render () {
-        let showcase = <p>Loading...</p>;
+        let showcase = <Spinner />;
         if(this.state.popularAlbums){
             showcase =  this.state.popularAlbums.map(album => (
                 <Album

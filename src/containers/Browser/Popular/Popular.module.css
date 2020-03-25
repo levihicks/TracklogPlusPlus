@@ -1,3 +1,8 @@
+.Popular {
+    max-width: 100%;
+    overflow: hidden;
+}
+
 .TopFiveHeader {
     color: #FFFBFC;
     font-size: 2rem;

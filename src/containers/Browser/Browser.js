@@ -3,45 +3,40 @@ import {Route} from 'react-router-dom';
 //import Searchbar from './Searchbar/Searchbar';
 import Popular from './Popular/Popular';
 import classes from './Browser.module.css';
-import axios from 'axios';
 import AlbumPage from './AlbumPage/AlbumPage';
+import Searchbar from './Searchbar/Searchbar';
+import SearchResults from './SearchResults/SearchResults';
 
 class Browser extends Component {
 
-    // backButtonHandler = props => {
-    //     this.setState((prevState, prevProps) => ({
-    //         currentView: prevState.prevView,
-    //         prevView: null
-    //     }));
-    // }
-
-    /*albumPageView = (
-        <AlbumPage title={albumTitle} 
-            artist={albumArtist} 
-            img={albumImg}
-            backButtonHandler={this.backButtonHandler}/>
-    );*/
-
-    popularView = (props) => (
-        <React.Fragment>
-            {/*<Searchbar />*/}
-            <Popular {...props}/>
-        </React.Fragment>
-    );
-    
     state = {
-        searchQuery: "",
-        currentView: this.view,
-        prevView: null
+        query: false
+    }  
+
+    setQuery = (query) => {
+        this.setState((prevState, prevProps) => {
+            if (prevState.query !== query)
+                return {query: query};
+        });
     }
 
     render() {
-        console.log(axios.interceptors);
+        const mainView = (props) => (
+            <React.Fragment>
+                <Searchbar
+                    setQuery={this.setQuery}  
+                    val={this.state.query}/>
+                {this.state.query
+                    ?<SearchResults 
+                        query={this.state.query} />
+                    :<Popular {...props}/>}
+            </React.Fragment>
+        );
         return (
             <div className={classes.Browser}>
-                    <Route path="/" exact render={(props)=>this.popularView(props)} />
-                    <Route path="/albumInfo" component={AlbumPage} />
-                    {/*this.state.currentView*/}
+                <Route path="/" exact render={(props)=>mainView(props)} />
+                <Route path="/albumInfo" component={AlbumPage} />
+                {/*this.state.currentView*/}
             </div>
         );
     }

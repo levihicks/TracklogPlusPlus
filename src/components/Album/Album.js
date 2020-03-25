@@ -1,10 +1,11 @@
 import React from 'react';
 import classes from './Album.module.css';
 import {Link} from 'react-router-dom';
+import DefaultImg from '../../assets/images/default_album_cover.png';
 
 const album = (props) => (
     <div className={classes.Album}>
-        <div className={classes.AlbumCover}><img src={props.img} alt="Album Cover" /></div>
+        <div className={classes.AlbumCover}><img src={props.img?props.img:DefaultImg} alt="Album Cover" /></div>
         <Link className={classes.AlbumTitle}
             to={{
                 pathname: '/albumInfo',

@@ -13,7 +13,8 @@ class App extends React.Component {
 
   state = {
     modalActive: false,
-    authenticated: false
+    authenticated: false,
+    mobileView: "browser"
   };
 
   toggleModal = () => {
@@ -22,6 +23,18 @@ class App extends React.Component {
     }));
   };
 
+  changeMobileView = (newView) => {
+    this.setState({mobileView: newView});
+  }
+
+  addVisibility = (view) => {
+    let settings = [""];
+    if(this.state.mobileView !== view)
+      settings.push("d-none");
+    settings.push("d-md-block");
+    return settings.join(" ");
+  }
+
   render(){
     return (
       <BrowserRouter>
@@ -29,12 +42,13 @@ class App extends React.Component {
           {this.state.modalActive ? <AuthenticateModal hide={this.toggleModal}/> : null}
           <AppNavbar modalHandler={this.toggleModal}/>
           <Row className={classes.MainContent}>
-            <Col xs={4} className={classes.MCColumn}>
+            <Col xs={12} md={4} className={classes.MCColumn + this.addVisibility("log")}>
               <UserLog />
             </Col>
-            <Col xs={8} className={classes.MCColumn}>
-              <Browser />
+            <Col xs={12} md={8} className={classes.MCColumn + this.addVisibility("browser")}>
+              <Browser update={!this.state.modalActive}/>
             </Col>
+            <button id="tester" onClick={()=>this.changeMobileView(this.state.mobileView==="log"?"browser":"log")}></button>
           </Row>
         </Container>
       </BrowserRouter>

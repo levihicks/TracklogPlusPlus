@@ -1,3 +1,9 @@
+.AlbumPageSpinner {
+    position: absolute;
+    top: 50%;
+    transform: (translateY(-50%));
+}
+
 .AlbumPage {
     margin-top: 50px;
     width: 100%;
