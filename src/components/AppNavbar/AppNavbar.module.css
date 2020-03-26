@@ -5,3 +5,32 @@
     z-index: 100;
     flex-shrink: 0;
 }
+
+@media (max-width: 767px){
+    .AppNavbar {
+       position: fixed;
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       width: 100vw;
+    }
+
+    .NavbarMain { 
+       display: flex;
+       align-items: center;
+       height: 60px;
+    }
+
+    .HamburgerIcon {
+        position: absolute;
+    }
+
+    .HamburgerIcon:hover {
+        cursor: pointer;
+    }
+
+    .Logo {
+        margin: auto;
+    }
+
+}

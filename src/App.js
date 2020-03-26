@@ -40,7 +40,7 @@ class App extends React.Component {
       <BrowserRouter>
         <Container fluid className={classes.AppContainer}>
           {this.state.modalActive ? <AuthenticateModal hide={this.toggleModal}/> : null}
-          <AppNavbar modalHandler={this.toggleModal}/>
+          <AppNavbar modalHandler={this.toggleModal} viewChange={this.changeMobileView}/>
           <Row className={classes.MainContent}>
             <Col xs={12} md={4} className={classes.MCColumn + this.addVisibility("log")}>
               <UserLog />
@@ -48,7 +48,6 @@ class App extends React.Component {
             <Col xs={12} md={8} className={classes.MCColumn + this.addVisibility("browser")}>
               <Browser update={!this.state.modalActive}/>
             </Col>
-            <button id="tester" onClick={()=>this.changeMobileView(this.state.mobileView==="log"?"browser":"log")}></button>
           </Row>
         </Container>
       </BrowserRouter>

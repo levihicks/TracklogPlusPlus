@@ -14,3 +14,9 @@
     overflow: auto;
 }
 
+@media (max-width: 767px){
+    .MainContent {
+        margin-top: 40px;
+    }
+}
+

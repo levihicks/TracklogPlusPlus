@@ -6,6 +6,7 @@
     height: 40px;
     width: 100%;
     min-width: 125px;
+    font-weight: bold;
 }
 
 .AccountButton:hover{

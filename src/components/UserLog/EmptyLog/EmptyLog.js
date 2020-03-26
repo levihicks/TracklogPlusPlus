@@ -1,9 +1,7 @@
 import React from 'react';
 import classes from './EmptyLog.module.css';
-import { Row } from 'react-bootstrap';
+import EmptyLogBackground from '../../../assets/images/empty_log_tiles.svg';
 
-const albumPlaceholder = (k) => (<div key={k} className={classes.AlbumPlaceholder}></div>);
-const albumPlaceholders = [...Array(3)].map(()=>(albumPlaceholder(Math.random().toString())));
 const Fade = ()=>(<div className={classes.Fade}></div>);
 
 const EmptyLogMsg = () => (
@@ -13,15 +11,13 @@ const EmptyLogMsg = () => (
 const emptyLog = () => {
     
     return (
-        <React.Fragment>
-            {
-                albumPlaceholders.map((album)=>(
-                     <Row key={Math.random().toString()} className="d-flex justify-content-center">{Array(albumPlaceholders)}</Row>
-                ))
-            }
+        <div className={classes.EmptyLog}>
+            <img src={EmptyLogBackground} 
+                alt=""
+                className={classes.EmptyLogBackground} />
             <Fade/>
             <EmptyLogMsg />
-        </React.Fragment>
+        </div>
     );
 };
 

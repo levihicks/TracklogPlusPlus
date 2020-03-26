@@ -1,0 +1,10 @@
+@media (max-width: 767px){
+    .HamburgerItem {
+        padding: 20px 0;
+        color: #010400;
+        border-top: 1px solid #30332E;
+        text-align: center;
+        font-weight: bold;
+        cursor: pointer;
+    }
+}
