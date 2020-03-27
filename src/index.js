@@ -4,6 +4,9 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import browserReducer from './store/reducers/browser';
 
 // Axios Defaults
 axios.defaults.baseURL = "https://ws.audioscrobbler.com/2.0";
@@ -14,7 +17,14 @@ axios.interceptors.request.use(request => {
     return request;
 });
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const rootReducer = combineReducers({
+    browser: browserReducer
+});
+
+const store = createStore(rootReducer);
+
+
+ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -15,7 +15,6 @@ class AppNavbar extends Component {
     }
 
     toggleMenu = () => {
-        console.log("clicked");
         this.setState((prevState, prevProps) => (
             {menuDisplayed: !prevState.menuDisplayed}
         ));
@@ -27,7 +26,6 @@ class AppNavbar extends Component {
     }
 
     render() {
-        console.log(this.state.menuDisplayed);
         return (
             <Row className={classes.AppNavbar}
             style={this.state.menuDisplayed?{height:"100vh"}:null}> 
