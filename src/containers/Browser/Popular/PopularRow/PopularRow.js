@@ -1,27 +1,15 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import classes from './PopularRow.module.css';
-import axios from 'axios';
 import Album from '../../../../components/Album/Album';
 import Spinner from '../../../../components/UI/Spinner/Spinner';
-import * as actions from '../../../../store/actions';
+import * as actionCreators from '../../../../store/actions/index';
 
 class PopularRow extends Component {
 
     componentDidMount () {
-        if(this.props.categories.filter(cat => cat.name===this.props.category).length===0) {
-            axios.get("?method=tag.gettopalbums&tag="+this.props.category+"&limit=5")
-            .then(response => {
-                const albums = response.data.albums.album;
-                const category = {name: this.props.category, albums: []};
-                category.albums = albums.map(album => (
-                    {name: album.name, artist: album.artist.name, img: album.image[3]["#text"]}
-                ));
-                this.props.categoryAdd(category);
-                
-            })
-            .catch(error => {console.log(error)});
-        }
+        if(this.props.categories.filter(cat => cat.name===this.props.category).length===0) 
+            this.props.categoryAdd(this.props.category);
     }
 
     render () {
@@ -56,7 +44,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        categoryAdd: (category) => dispatch({type: actions.ADD_POPULAR_CATEGORY, category: category})
+        categoryAdd: (category) => dispatch(actionCreators.addPopularCategory(category))
     }
 };
 
