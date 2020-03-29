@@ -13,9 +13,11 @@ class PopularRow extends Component {
     }
 
     render () {
-        let showcase = <Spinner />;
+        let showcase;
         let category = this.props.categories.filter(cat=>cat.name===this.props.category)[0];
-        if(category){
+        if(this.props.loading)
+            showcase = <Spinner />
+        else if(category){
             showcase =  category.albums.map(album => (
                 <Album
                 title={album.name} 
@@ -24,6 +26,8 @@ class PopularRow extends Component {
                 img={album.img}/>
             ))
         }
+        else if(this.props.error)
+            showcase = <p>Error loading albums.</p>;
         return (
             <div className={classes.PopularRow}>
                 <div className={classes.HeaderBlock}></div>
@@ -38,13 +42,15 @@ class PopularRow extends Component {
 
 const mapStateToProps = state => {
     return {
-        categories: state.browser.categories
+        categories: state.browser.categories,
+        error: state.browser.error,
+        loading: state.browser.loading
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        categoryAdd: (category) => dispatch(actionCreators.addPopularCategory(category))
+        categoryAdd: (category) => dispatch(actionCreators.addCategory(category))
     }
 };
 

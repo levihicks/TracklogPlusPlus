@@ -1,3 +1,3 @@
 export {
-    addPopularCategory
+    addCategory
 } from './browser';
