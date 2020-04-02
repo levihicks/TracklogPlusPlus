@@ -5,6 +5,7 @@
     width: 80%;
     margin: 50px 0;
     display: flex;
+    
 }
 
 .SearchLogo {
@@ -18,8 +19,9 @@
     color: #EC068E;
     flex: 1;
     border: none;
+    outline: none;
 }
 
 .Searchbar input::placeholder {
-    color: #EC068E;
+    color: #6d0040;
 }

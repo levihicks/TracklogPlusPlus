@@ -1,6 +1,7 @@
 .PopularRow {
-    width: 100%;
+    width: auto;
     padding: 20px;
+    max-width: 100%;
 }
 
 .HeaderBlock {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import lastFmAxios from '../../../axios/lastFm';
 import classes from './SearchResults.module.css';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Album from '../../../components/Album/Album';
@@ -13,7 +13,7 @@ class SearchResults extends Component {
 
     getAlbums = () => {
         if (typeof(this.props.query)==="string") {
-            axios.get("?method=album.search&album="+this.props.query)
+            lastFmAxios.get("?method=album.search&album="+this.props.query)
             .then( response => {
                 let albums = response.data.results.albummatches.album;
                 let result = albums.map(album => (

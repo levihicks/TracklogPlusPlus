@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import axios from 'axios';
+import lastFmAxios from '../../axios/lastFm';
 
 export const addCategoryStart = () => {
     return {
@@ -27,7 +27,8 @@ export const addCategoryFail = (err) => {
 
 export const addCategory = category => {
     return (dispatch) => {
-        axios.get("?method=tag.gettopalbums&tag="+category+"&limit=5")
+        dispatch(addCategoryStart());
+        lastFmAxios.get("?method=tag.gettopalbums&tag="+category+"&limit=5")
             .then(response => {dispatch(addCategorySuccess(response, category))})
             .catch(error => {dispatch(addCategoryFail(error));});
     }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import classes from './PopularRow.module.css';
 import Album from '../../../../components/Album/Album';
 import Spinner from '../../../../components/UI/Spinner/Spinner';
-import * as actionCreators from '../../../../store/actions/index';
+import * as actions from '../../../../store/actions/index';
 
 class PopularRow extends Component {
 
@@ -50,7 +50,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        categoryAdd: (category) => dispatch(actionCreators.addCategory(category))
+        categoryAdd: (category) => dispatch(actions.addCategory(category))
     }
 };
 

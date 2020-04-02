@@ -6,6 +6,36 @@
     flex-shrink: 0;
 }
 
+@media (min-width: 768px){
+    .DesktopNavItems {
+        display: flex;
+        justify-content: center;
+    }
+    
+    .ProfileIcon {
+        height: 45px;
+        cursor: pointer;
+        border-radius: 30px;
+        border: 2px solid transparent;
+    }
+    
+    .ProfileIcon:hover {
+        background: #62BCC1;
+        border: 2px solid #62BCC1;
+    }
+    
+    .ProfileInfo {
+        position: fixed;
+        top: 60px;
+        padding: 5px 20px;
+        background: #30332E;
+    }
+    
+    .LogoutButton {
+        cursor: pointer;
+    }
+}
+
 @media (max-width: 767px){
     .AppNavbar {
        position: fixed;
@@ -33,4 +63,7 @@
         margin: auto;
     }
 
+    .ProfileIcon {
+        display: none;
+    }
 }

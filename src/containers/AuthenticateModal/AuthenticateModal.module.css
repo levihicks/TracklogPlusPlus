@@ -34,13 +34,14 @@
 .AuthenticationInput {
     border: none;
     background: none;
-    border-bottom: 3px solid #010400;
+    border-bottom: 1px solid #30332E;
     color: #010400;
     width: 80%;
+    outline: none;
 }
 
 .AuthenticationInput::placeholder {
-    color: #010400;
+    color: #30332E;
 }
 
 .CurrentView {
@@ -58,4 +59,24 @@
     border-radius: 20px;
     color: #FFFBFC;
     padding: 5px 15px;
+}
+
+.AuthError {
+    display: flex;
+    align-items: center;
+    color: #fffbfc;
+    font-weight: bold;
+    border-radius: 10px;
+    text-align: center;
+    padding: 5px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 5px;
+}
+
+.ErrorIcon {
+    height: 20px;
+    margin-right: 5px;
 }

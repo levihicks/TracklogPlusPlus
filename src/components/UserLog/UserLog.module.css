@@ -6,4 +6,8 @@
     margin-top: 50px;
 }
 
-
+.LogContent {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
