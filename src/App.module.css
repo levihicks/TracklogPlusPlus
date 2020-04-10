@@ -1,15 +1,10 @@
 .MainContent {
-    overflow: hidden;
+    padding-top: 60px;
+    height: 100%;
 }
 
 .MCColumn {
-    height: 100%;
+    height: inherit;
     overflow: auto;
-}
-
-@media (max-width: 767px){
-    .MainContent {
-        margin-top: 40px;
-    }
 }
 

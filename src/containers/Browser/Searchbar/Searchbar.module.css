@@ -15,6 +15,7 @@
 }
 
 .ClearInputIcon {
+    height: 26px;
     width: 20px;
     display: inline-block;
     cursor: pointer;

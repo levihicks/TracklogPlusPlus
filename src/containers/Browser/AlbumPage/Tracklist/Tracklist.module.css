@@ -9,3 +9,10 @@
     padding: 20px 10px;
     border-bottom: 1px solid #30332E;
 }
+
+@media (max-width: 767px){
+    .Track {
+        margin: auto;
+        min-width: 250px;
+    }
+}

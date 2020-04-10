@@ -80,10 +80,12 @@ class AlbumPage extends Component {
                 <div className={classes.AlbumPage}>
                     <BackButton />
                     <div className={classes.AlbumInfo}>
-                        <img
-                        alt="Album" 
-                        src={albumImg}
-                        />
+                        <div className={classes.AlbumImage}>
+                            <img
+                            alt="Album" 
+                            src={albumImg}
+                            />
+                        </div>
                         <div style={{paddingLeft: "10px"}}>
                             <div className={classes.AlbumTitle}>{album.name}</div>
                             <div className={classes.AlbumArtist}>{album.artist}</div>

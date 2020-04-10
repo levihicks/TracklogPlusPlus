@@ -13,6 +13,12 @@
     display: flex;
 }
 
+@media (max-width: 767px) {
+    .AuthenticateModal {
+        max-width: 100%;
+    }
+}
+
 .AuthenticateForm {
     flex-grow: 1;
     display: flex;
