@@ -8,10 +8,16 @@
     
 }
 
-.SearchLogo {
+.SearchIcon {
     width: 15px;
     display: inline-block;
     margin-right: 5px;
+}
+
+.ClearInputIcon {
+    width: 20px;
+    display: inline-block;
+    cursor: pointer;
 }
 
 .Searchbar input {

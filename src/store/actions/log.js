@@ -24,18 +24,24 @@ export const fetchLogStart = () => {
 export const fetchLog = (uid, token) => {
     return (dispatch) => {
         dispatch(fetchLogStart());
-        logsAxios.get("/logs/"+uid+".json?auth="+token)
-        .then(res => {
-            const fetchedAlbums = Object.keys(res.data)
-                .map(albumId => (
-                {...res.data[albumId], albumId: albumId}
-                ))
-                .filter(album => (
-                    album.placeholder !== "placeholder"
-                ));
-            dispatch(fetchLogSuccess(fetchedAlbums));
-        })
-        .catch(err=>{console.log(err);dispatch(fetchLogFail(err))});
+        if(uid === null || token === null) {
+            dispatch(fetchLogSuccess([]));
+        }
+        else {
+            logsAxios.get("/logs/"+uid+".json?auth="+token)
+            .then(res => {
+                const fetchedAlbums = Object.keys(res.data)
+                    .map(albumId => (
+                    {...res.data[albumId], albumId: albumId}
+                    ))
+                    .filter(album => (
+                        album.placeholder !== "placeholder"
+                    ));
+                dispatch(fetchLogSuccess(fetchedAlbums));
+            })
+            .catch(err=>{console.log(err);dispatch(fetchLogFail(err))});
+        }
+        
     };
     
 };

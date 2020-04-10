@@ -46,10 +46,11 @@ class AuthenticateModal extends Component {
         this.setState({passwordVerifyInput: event.target.value});
     };
 
-    authenticateUser = () => {
+    authenticateUser = (event) => {
         // this.props.onAuthenticate("lv.hicks@gmail.com", 
         //     "randgiga", 
         //     true);
+        event.preventDefault();
         this.props.onAuthenticate(this.state.emailInput,
             this.state.passwordInput,
             this.state.loggingIn);
@@ -62,44 +63,47 @@ class AuthenticateModal extends Component {
         if(!this.props.loading){
             modalContent = (
                 <React.Fragment>
-                    <Row className={[classes.AuthenticateRows,
-                        classes.AuthenticationHeaders].join(" ")}>
-                    <div className={this.state.loggingIn ? classes.CurrentView : null}
-                        onClick={()=>this.setLoggingIn(true)}>Login</div>
-                    <div className={this.state.loggingIn ? null : classes.CurrentView}
-                        onClick={()=>this.setLoggingIn(false)}>Create Account</div>
-                    </Row>
-                    <Row className={classes.AuthenticateRows}>
-                        <input className={classes.AuthenticationInput} 
-                        placeholder="E-mail" 
-                        value={this.state.emailInput}
-                        onChange={(event)=>{this.setEmailInput(event)}}/>
-                    </Row>
-                    <Row className={classes.AuthenticateRows}>
-                        <input type="password" 
-                        className={classes.AuthenticationInput} 
-                        placeholder="Password" 
-                        value={this.state.passwordInput}
-                        onChange={(event)=>{this.setPasswordInput(event)}}/>
-                    </Row>
-                    {!this.state.loggingIn ?
-                    (
+                    
+                    <form className={classes.AuthenticateForm}
+                        onSubmit={this.authenticateUser}>
+                        <Row className={[classes.AuthenticateRows,
+                            classes.AuthenticationHeaders].join(" ")}>
+                        <div className={this.state.loggingIn ? classes.CurrentView : null}
+                            onClick={()=>this.setLoggingIn(true)}>Login</div>
+                        <div className={this.state.loggingIn ? null : classes.CurrentView}
+                            onClick={()=>this.setLoggingIn(false)}>Create Account</div>
+                        </Row>
+                        <Row className={classes.AuthenticateRows}>
+                            <input className={classes.AuthenticationInput} 
+                            placeholder="E-mail" 
+                            value={this.state.emailInput}
+                            onChange={(event)=>{this.setEmailInput(event)}}/>
+                        </Row>
                         <Row className={classes.AuthenticateRows}>
                             <input type="password" 
-                                className={classes.AuthenticationInput} 
-                                placeholder="Re-Enter Password" 
-                                value={this.state.passwordVerifyInput}
-                                onChange={(event)=>{this.setPasswordVerifyInput(event)}}/>
+                            className={classes.AuthenticationInput} 
+                            placeholder="Password" 
+                            value={this.state.passwordInput}
+                            onChange={(event)=>{this.setPasswordInput(event)}}/>
                         </Row>
-                    )
-                    : null
-                    }
-                    <Row className={classes.AuthenticateRows}>
-                        <button className={classes.CompleteButton}
-                            onClick={this.authenticateUser}>
-                            {this.state.loggingIn? "Login" : "Create Account"}
-                        </button>
-                    </Row>
+                        {!this.state.loggingIn ?
+                        (
+                            <Row className={classes.AuthenticateRows}>
+                                <input type="password" 
+                                    className={classes.AuthenticationInput} 
+                                    placeholder="Re-Enter Password" 
+                                    value={this.state.passwordVerifyInput}
+                                    onChange={(event)=>{this.setPasswordVerifyInput(event)}}/>
+                            </Row>
+                        )
+                        : null
+                        }
+                        <Row className={classes.AuthenticateRows}>
+                            <input type="submit"
+                                className={classes.CompleteButton}
+                                value={this.state.loggingIn? "Login" : "Create Account"} />
+                        </Row>
+                    </form>
                     { this.props.error ?
                     <div className={classes.AuthError}>
                         <img src={ErrorIcon} 

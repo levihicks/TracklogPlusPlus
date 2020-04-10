@@ -10,6 +10,7 @@ import HamburgerItem from './HamburgerItem/HamburgerItem';
 import Logo from '../../assets/images/logo.svg';
 import HamburgerIcon from '../../assets/icons/hamburger.svg';
 import ProfileIcon from '../../assets/icons/profile.svg';
+import * as actionCreators from '../../store/actions/index';
 
 class AppNavbar extends Component {
 
@@ -76,7 +77,8 @@ class AppNavbar extends Component {
                     }
                     { this.state.showProfileInfo ?
                     <div className={classes.ProfileInfo}>
-                        <div className={classes.LogoutButton}>[Logout]</div>
+                        <div className={classes.LogoutButton}
+                            onClick={()=>{this.props.onLogout();this.setState({showProfileInfo:false});}}>[Logout]</div>
                     </div>
                     :null
                     }
@@ -92,4 +94,10 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps)(AppNavbar);
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogout: () => dispatch(actionCreators.logout())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppNavbar);

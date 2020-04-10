@@ -1,24 +1,24 @@
 .Album {
     display: inline-block;
-    margin-right: 20px;
-
+    margin: 10px;
 }
 
 .AlbumCover {
-    height: 100px;
-    width: 100px;
+    height: 150px;
+    width: 150px;
     background: #071A00;
     display: block;
 }
 
 .AlbumCover img {
-    height: 100px;
+    height: 150px;
 }
 
 .AlbumTitle, .AlbumArtist {
     display: block;
-    width: 100px;
+    width: 150px;
     color: #FFFBFC;
+    font-size: 1.25rem;
 }
 
 .AlbumTitle {

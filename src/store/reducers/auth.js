@@ -8,6 +8,10 @@ const initialState = {
     loading: false
 }
 
+const logout = (state, action) => {
+    return updateObject(state, {idToken: null, userId: null});
+}
+
 const authStart = ( state, action ) => {
     return updateObject( state, {loading: true, error: null} );
 };
@@ -29,6 +33,7 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.AUTH_START: return authStart(state, action);
         case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
         case actionTypes.AUTH_FAIL: return authFail(state, action);
+        case actionTypes.LOGOUT: return logout(state, action);
         default:
             return state;
     }

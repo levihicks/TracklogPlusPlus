@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import classes from './Searchbar.module.css';
-import searchLogo from '../../../assets/icons/search.svg';
+import searchIcon from '../../../assets/icons/search.svg';
+import clearInputIcon from '../../../assets/icons/clear_input.svg';
+import clearInputIconHover from '../../../assets/icons/clear_input_hover.svg';
 
 class Searchbar extends Component {
 
     state = {
-        val: ""
+        val: "",
+        clearInputHover: false
     }
 
     componentDidMount () {
@@ -16,8 +19,7 @@ class Searchbar extends Component {
         });
     }
 
-    searchChangeHandler = (e) => {
-        const inputVal = e.target.value;
+    searchChangeHandler = (inputVal) => {
         this.setState({val: inputVal});
         this.props.setQuery(inputVal !== "");
         if(this.timer)
@@ -29,10 +31,20 @@ class Searchbar extends Component {
     render() {
         return (
             <div className={classes.Searchbar}>
-                <img alt="Search Icon" src={searchLogo} className={classes.SearchLogo}/>
-                <input onChange={(e)=>{this.searchChangeHandler(e)}} 
+                <img alt="Search Icon" src={searchIcon} className={classes.SearchIcon}/>
+                <input onChange={(e)=>{this.searchChangeHandler(e.target.value)}} 
                     placeholder="Search for an album..."
                     value={this.state.val}/>
+                {this.state.val.length > 0 ?
+                <img 
+                    onMouseEnter={()=>{this.setState({clearInputHover: true})}}
+                    onMouseLeave={()=>{this.setState({clearInputHover: false})}}
+                    alt="Clear Input Icon" 
+                    src={this.state.clearInputHover?clearInputIconHover:clearInputIcon}
+                    onClick={()=>{this.searchChangeHandler("");}}
+                    className={classes.ClearInputIcon}/>
+                    :null
+                }
             </div>
         )
     }

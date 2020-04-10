@@ -7,15 +7,21 @@ import UserLog from './components/UserLog/UserLog';
 import Browser from './containers/Browser/Browser';
 import AuthenticateModal from './containers/AuthenticateModal/AuthenticateModal';
 import { BrowserRouter } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {Row, Col} from 'react-bootstrap';
+import * as actionCreators from './store/actions/index';
 
-import {Container, Row, Col} from 'react-bootstrap';
 class App extends React.Component {
 
   state = {
     modalActive: false,
     authenticated: false,
-    mobileView: "browser"
+    mobileView: "browser",
   };
+
+  componentDidMount() {
+    this.props.onTryLocalAuth();
+  }
 
   toggleModal = () => {
     this.setState((state,props)=>({
@@ -36,23 +42,28 @@ class App extends React.Component {
   }
 
   render(){
-    return (
+    let content = (
       <BrowserRouter>
-        <Container fluid className={classes.AppContainer}>
-          {this.state.modalActive ? <AuthenticateModal hide={this.toggleModal}/> : null}
-          <AppNavbar modalHandler={this.toggleModal} viewChange={this.changeMobileView}/>
-          <Row className={classes.MainContent}>
-            <Col xs={12} md={4} className={classes.MCColumn + this.addVisibility("log")}>
-              <UserLog />
-            </Col>
-            <Col xs={12} md={8} className={classes.MCColumn + this.addVisibility("browser")}>
-              <Browser update={!this.state.modalActive}/>
-            </Col>
-          </Row>
-        </Container>
+        {this.state.modalActive ? <AuthenticateModal hide={this.toggleModal}/> : null}
+        <AppNavbar modalHandler={this.toggleModal} viewChange={this.changeMobileView}/>
+        <Row className={classes.MainContent}>
+          <Col xs={12} md={4} className={classes.MCColumn + this.addVisibility("log")}>
+            <UserLog />
+          </Col>
+          <Col xs={12} md={8} className={classes.MCColumn + this.addVisibility("browser")}>
+            <Browser update={!this.state.modalActive}/>
+          </Col>
+        </Row>
       </BrowserRouter>
     );
+    return content;
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    onTryLocalAuth: () => dispatch(actionCreators.localAuth())
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App);

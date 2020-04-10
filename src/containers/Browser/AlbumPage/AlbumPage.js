@@ -15,7 +15,8 @@ class AlbumPage extends Component {
 
     state = {
         albumInfo: null,
-        inLog: false
+        inLog: false,
+        showPopover: false
     }
 
     fetchAlbumInfo = (newParams) => {
@@ -47,21 +48,23 @@ class AlbumPage extends Component {
     }
 
     addRemoveHandler = () => {
-        if (!this.state.inLog) {
-            const album = this.state.albumInfo;
-            const albumData = {name: album.name, 
-                artist: album.artist, 
-                img: album.image[5]["#text"]};
-            this.props.onAlbumAdd(albumData, this.props.uid, this.props.token);
-            this.setState({inLog: true});
-        }
-        else {
-            let album = this.state.albumInfo;
-            let albumId = this.props.albums.filter(a => ( 
-                album.artist === a.artist && album.name === a.name
-            ))[0].albumId;
-            this.props.onAlbumRemove(this.props.uid, this.props.token, albumId);
-            this.setState({inLog: false});
+        if(!this.props.loading) {
+            if (!this.state.inLog) {
+                const album = this.state.albumInfo;
+                const albumData = {name: album.name, 
+                    artist: album.artist, 
+                    img: album.image[5]["#text"]};
+                this.props.onAlbumAdd(albumData, this.props.uid, this.props.token);
+                this.setState({inLog: true});
+            }
+            else {
+                let album = this.state.albumInfo;
+                let albumId = this.props.albums.filter(a => ( 
+                    album.artist === a.artist && album.name === a.name
+                ))[0].albumId;
+                this.props.onAlbumRemove(this.props.uid, this.props.token, albumId);
+                this.setState({inLog: false});
+            }
         }
     }
 
@@ -84,11 +87,23 @@ class AlbumPage extends Component {
                         <div style={{paddingLeft: "10px"}}>
                             <div className={classes.AlbumTitle}>{album.name}</div>
                             <div className={classes.AlbumArtist}>{album.artist}</div>
-                            <div className={classes.AddRemoveButton}
-                                onClick={this.addRemoveHandler}>
-                                <img alt="" 
-                                    src={this.state.inLog?Remove:Add} 
-                                    className={classes.AddRemoveIcon} />
+                            <div className={classes.AddRemoveButton 
+                                +" "+ (!this.props.token ? classes.Disabled : null)}
+                                onClick={this.props.token ? this.addRemoveHandler : null}
+                                onMouseEnter={()=>{this.setState({showPopover: true})}}
+                                onMouseLeave={()=>{this.setState({showPopover: false})}}>
+                                {!this.props.loading ? 
+                                    <img alt="" 
+                                        src={this.state.inLog?Remove:Add} 
+                                        className={classes.AddRemoveIcon} />
+                                    : <Spinner style={{height: "80%", width: "80%"}}/>
+                                }
+                                {this.state.showPopover && !this.props.token ?
+                                    <div className={classes.Popover}>
+                                        Create an account or sign in to add to your log!
+                                    </div>
+                                    : null
+                                }
                             </div>
                         </div>
                     </div>
@@ -104,7 +119,8 @@ const mapStateToProps = state => {
     return {
         uid: state.auth.userId,
         token: state.auth.idToken,
-        albums: state.log.albums
+        albums: state.log.albums,
+        loading: state.log.loading
     }
 }
 

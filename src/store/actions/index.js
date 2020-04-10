@@ -3,7 +3,9 @@ export {
 } from './browser';
 
 export {
-    auth
+    auth,
+    logout,
+    localAuth
 } from './auth';
 
 export {
