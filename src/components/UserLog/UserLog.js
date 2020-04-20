@@ -8,17 +8,22 @@ import Album from '../Album/Album';
 import {connect} from 'react-redux';
 import * as actionCreators from '../../store/actions/index';
 import Spinner from '../UI/Spinner/Spinner';
-
+import {withAuthConsumer} from '../../session';
+import {compose} from 'recompose';
 
 class UserLog extends Component {
 
     componentDidUpdate () {
-        this.props.onFetchLog(this.props.uid, this.props.token);
+        this.props.onFetchLog(
+            this.props.authState ?
+            this.props.authState.uid :
+            null
+        );
     }
 
     shouldComponentUpdate (nextProps) {
         return (nextProps.albums.length !== this.props.albums.length
-            || this.props.uid !== nextProps.uid);
+            || nextProps.authState !== this.props.authState);
     }
 
     render() {
@@ -47,7 +52,9 @@ class UserLog extends Component {
             <React.Fragment>
                 <Row>
                     <Col xs={12}>
-                        <div onClick={()=>this.props.onFetchLog(this.props.uid, this.props.token)} className={classes.LogHeader}>Your Log</div>
+                        <div className={classes.LogHeader}>
+                            Your Log
+                        </div>
                     </Col>
                 </Row>
                 <Row>
@@ -64,16 +71,18 @@ const mapStateToProps = state => {
     return {
         albums: state.log.albums,
         error: state.log.error,
-        loading: state.log.loading,
-        uid: state.auth.userId,
-        token: state.auth.idToken
+        loading: state.log.loading
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchLog: (uid, token) => dispatch(actionCreators.fetchLog(uid, token))
+        onFetchLog: (uid) => dispatch(actionCreators.fetchLog(uid))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserLog);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    compose(
+        withAuthConsumer
+    )(UserLog)
+);

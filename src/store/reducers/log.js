@@ -27,7 +27,7 @@ const addAlbumSuccess = (state, action) => {
 };
 
 const addAlbumFail = (state, action) => {
-    return updateObject(state, {error: action.error});
+    return updateObject(state, {error: action.error, loading: false});
 };
 
 const removeAlbumStart = (state, action) => {

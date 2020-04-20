@@ -1,6 +1,6 @@
 import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.scss';
 import * as serviceWorker from './serviceWorker';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
@@ -24,13 +24,13 @@ const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 const App = React.lazy(() => import('./App'));
 
 ReactDOM.render(
-    <Container fluid className="AppContainer">
-        <Suspense fallback={<Spinner />}>
-            <Provider store={store}>
-                <App />
-            </Provider>
-        </Suspense>
-    </Container>,
+        <Container fluid className="AppContainer">
+            <Suspense fallback={<Spinner />}>
+                <Provider store={store}>
+                    <App />
+                </Provider>
+            </Suspense>
+        </Container>,
     document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

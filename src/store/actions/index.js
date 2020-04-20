@@ -5,7 +5,6 @@ export {
 export {
     auth,
     logout,
-    localAuth
 } from './auth';
 
 export {

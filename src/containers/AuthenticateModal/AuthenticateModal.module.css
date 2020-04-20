@@ -2,7 +2,7 @@
     /*background: linear-gradient(34deg, #62BCC1 0%, #EC068E 100%);*/
     background: #FFFBFC;
     border-radius: 100px; 
-    height: 400px;
+    min-height: 400px;
     width: 400px;
     position: fixed;
     top: 50%;
@@ -11,6 +11,7 @@
     z-index: 200;
     padding: 40px;
     display: flex;
+    flex-direction: column;
 }
 
 @media (max-width: 767px) {
@@ -30,6 +31,7 @@
     display: flex;
     justify-content: space-around;
     align-content: space-around;
+    padding: 25px 0px;
 }
 
 .AuthenticationHeaders div {
@@ -82,10 +84,6 @@
     border-radius: 10px;
     text-align: center;
     padding: 5px;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
     margin-bottom: 5px;
 }
 

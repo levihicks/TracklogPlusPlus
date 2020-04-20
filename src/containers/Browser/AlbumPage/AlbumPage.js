@@ -10,6 +10,8 @@ import DefaultImg from '../../../assets/images/default_album_cover.png';
 import {connect} from 'react-redux';
 import * as actionCreators from '../../../store/actions/index';
 //import logsAxios from '../../../axios/logs';
+import {withAuthConsumer} from '../../../session';
+import {compose} from 'recompose';
 
 class AlbumPage extends Component {
 
@@ -54,7 +56,7 @@ class AlbumPage extends Component {
                 const albumData = {name: album.name, 
                     artist: album.artist, 
                     img: album.image[5]["#text"]};
-                this.props.onAlbumAdd(albumData, this.props.uid, this.props.token);
+                this.props.onAlbumAdd(albumData, this.props.authState.uid);
                 this.setState({inLog: true});
             }
             else {
@@ -62,7 +64,7 @@ class AlbumPage extends Component {
                 let albumId = this.props.albums.filter(a => ( 
                     album.artist === a.artist && album.name === a.name
                 ))[0].albumId;
-                this.props.onAlbumRemove(this.props.uid, this.props.token, albumId);
+                this.props.onAlbumRemove(this.props.authState.uid, albumId);
                 this.setState({inLog: false});
             }
         }
@@ -90,8 +92,8 @@ class AlbumPage extends Component {
                             <div className={classes.AlbumTitle}>{album.name}</div>
                             <div className={classes.AlbumArtist}>{album.artist}</div>
                             <div className={classes.AddRemoveButton 
-                                +" "+ (!this.props.token ? classes.Disabled : null)}
-                                onClick={this.props.token ? this.addRemoveHandler : null}
+                                +" "+ (!this.props.authState ? classes.Disabled : null)}
+                                onClick={this.props.authState ? this.addRemoveHandler : null}
                                 onMouseEnter={()=>{this.setState({showPopover: true})}}
                                 onMouseLeave={()=>{this.setState({showPopover: false})}}>
                                 {!this.props.loading ? 
@@ -100,7 +102,7 @@ class AlbumPage extends Component {
                                         className={classes.AddRemoveIcon} />
                                     : <Spinner style={{height: "80%", width: "80%"}}/>
                                 }
-                                {this.state.showPopover && !this.props.token ?
+                                {this.state.showPopover && !this.props.authState ?
                                     <div className={classes.Popover}>
                                         Create an account or sign in to add to your log!
                                     </div>
@@ -119,8 +121,6 @@ class AlbumPage extends Component {
 
 const mapStateToProps = state => {
     return {
-        uid: state.auth.userId,
-        token: state.auth.idToken,
         albums: state.log.albums,
         loading: state.log.loading
     }
@@ -128,9 +128,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAlbumAdd: (album, uid, token) => dispatch(actionCreators.addAlbum(album,uid,token)),
-        onAlbumRemove: (uid, token, albumId) => dispatch(actionCreators.removeAlbum(uid, token, albumId))
+        onAlbumAdd: (album, uid) => dispatch(actionCreators.addAlbum(album,uid)),
+        onAlbumRemove: (uid, albumId) => dispatch(actionCreators.removeAlbum(uid, albumId))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AlbumPage);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    compose(
+        withAuthConsumer
+    )(AlbumPage)
+);

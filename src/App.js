@@ -7,9 +7,9 @@ import UserLog from './components/UserLog/UserLog';
 import Browser from './containers/Browser/Browser';
 import AuthenticateModal from './containers/AuthenticateModal/AuthenticateModal';
 import { BrowserRouter } from 'react-router-dom';
-import {connect} from 'react-redux';
 import {Row, Col} from 'react-bootstrap';
-import * as actionCreators from './store/actions/index';
+import { compose } from 'redux';
+import { withAuthProvider } from './session';
 
 class App extends React.Component {
 
@@ -18,10 +18,6 @@ class App extends React.Component {
     authenticated: false,
     mobileView: "browser",
   };
-
-  componentDidMount() {
-    this.props.onTryLocalAuth();
-  }
 
   toggleModal = () => {
     this.setState((state,props)=>({
@@ -60,10 +56,6 @@ class App extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onTryLocalAuth: () => dispatch(actionCreators.localAuth())
-  }
-}
-
-export default connect(null, mapDispatchToProps)(App);
+export default compose(
+  withAuthProvider
+)(App);

@@ -11,6 +11,8 @@ import Logo from '../../assets/images/logo.svg';
 import HamburgerIcon from '../../assets/icons/hamburger.svg';
 import ProfileIcon from '../../assets/icons/profile.svg';
 import * as actionCreators from '../../store/actions/index';
+import {withAuthConsumer} from '../../session';
+import {compose} from 'recompose';
 
 class AppNavbar extends Component {
 
@@ -63,7 +65,7 @@ class AppNavbar extends Component {
                         clicked={()=>this.itemClicked("browser")}/>
                     
                     
-                    { this.props.token ?
+                    { this.props.authState ?
                     <React.Fragment>
                         <HamburgerItem content="[Logout]"
                             style={!this.state.menuDisplayed?{display: "none"}:null}/>
@@ -88,11 +90,7 @@ class AppNavbar extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        token: state.auth.idToken
-    }
-};
+
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -100,4 +98,8 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppNavbar);
+export default connect(null, mapDispatchToProps)(
+    compose(
+        withAuthConsumer
+    )(AppNavbar)
+);

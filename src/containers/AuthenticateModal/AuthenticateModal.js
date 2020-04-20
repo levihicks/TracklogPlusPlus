@@ -14,6 +14,9 @@ import * as actions from '../../store/actions/index';
 
 import ErrorIcon from '../../assets/icons/error.svg';
 
+import {withAuthConsumer} from '../../session';
+import {compose} from 'recompose';
+
 class AuthenticateModal extends Component {
     state = {
         loggingIn: true,
@@ -23,7 +26,7 @@ class AuthenticateModal extends Component {
     };
 
     componentDidUpdate() {
-        if(this.props.token)
+        if(this.props.authState)
             this.props.hide();
     }
     
@@ -47,9 +50,6 @@ class AuthenticateModal extends Component {
     };
 
     authenticateUser = (event) => {
-        // this.props.onAuthenticate("lv.hicks@gmail.com", 
-        //     "randgiga", 
-        //     true);
         event.preventDefault();
         this.props.onAuthenticate(this.state.emailInput,
             this.state.passwordInput,
@@ -57,8 +57,6 @@ class AuthenticateModal extends Component {
     }
 
     render() {
-        //if(this.props.token)
-        //    this.props.hide();
         let modalContent = <Spinner />;
         if(!this.props.loading){
             modalContent = (
@@ -108,7 +106,7 @@ class AuthenticateModal extends Component {
                     <div className={classes.AuthError}>
                         <img src={ErrorIcon} 
                             alt=""
-                            className={classes.ErrorIcon}s />
+                            className={classes.ErrorIcon} />
                         {this.props.error.message}
                     </div>
                     : null
@@ -130,8 +128,7 @@ class AuthenticateModal extends Component {
 const mapStateToProps = state => {
     return {
         error: state.auth.error,
-        loading: state.auth.loading,
-        token: state.auth.idToken
+        loading: state.auth.loading
     };
 }
 
@@ -141,4 +138,8 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthenticateModal);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    compose(
+        withAuthConsumer
+    )(AuthenticateModal)
+);
