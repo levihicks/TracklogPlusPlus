@@ -22,7 +22,9 @@ class AlbumPage extends Component {
     }
 
     fetchAlbumInfo = (newParams) => {
-        lastFmAxios.get("?method=album.getinfo&artist="+newParams.artist+"&album="+newParams.title)
+        lastFmAxios.get("?method=album.getinfo&artist="
+            +encodeURIComponent(newParams.artist)+"&album="
+            +encodeURIComponent(newParams.title))
             .then(response => {
                 this.setState({albumInfo: response.data.album});
             })

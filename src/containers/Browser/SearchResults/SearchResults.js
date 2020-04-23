@@ -13,7 +13,8 @@ class SearchResults extends Component {
 
     getAlbums = () => {
         if (typeof(this.props.query)==="string") {
-            lastFmAxios.get("?method=album.search&album="+this.props.query)
+            lastFmAxios.get("?method=album.search&album="
+                +encodeURIComponent(this.props.query))
             .then( response => {
                 let albums = response.data.results.albummatches.album;
                 let result = albums.map(album => (

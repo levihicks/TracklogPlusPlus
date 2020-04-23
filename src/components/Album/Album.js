@@ -9,7 +9,7 @@ const album = (props) => (
         <Link className={classes.AlbumTitle}
             to={{
                 pathname: '/albumInfo',
-                search: '?artist='+props.artist+'&title='+props.title
+                search: '?artist='+encodeURIComponent(props.artist)+'&title='+encodeURIComponent(props.title)
             }}>
                 {props.title}
             </Link>
