@@ -1,17 +1,19 @@
-.BackButton {
-    color: #EC068E;
-    font-weight: bold;
-    font-size: 1.25rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
+.BackButton,
+.BackButton:hover {
+  color: #ec068e;
+  font-weight: bold;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  width: 20px;
 }
 
 .BackButton:hover {
-    color: #FFFBFC;
+  opacity: 0.5;
 }
 
 .BackIcon {
-    height: 20px;
-    margin-right: 10px;
+  height: 20px;
+  margin-right: 10px;
 }

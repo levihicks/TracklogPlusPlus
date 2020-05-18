@@ -1,14 +1,5 @@
-export {
-    addCategory
-} from './browser';
+export { addCategory } from "./browser";
 
-export {
-    auth,
-    logout,
-} from './auth';
+export { auth, logout } from "./auth";
 
-export {
-    fetchLog,
-    addAlbum,
-    removeAlbum
-} from './log';
+export { fetchLog, addAlbum, removeAlbum } from "./log";
