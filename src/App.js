@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
-import { compose } from "redux";
+import { connect } from "react-redux";
+//import { compose } from "redux";
 
 import classes from "./App.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -10,7 +11,8 @@ import AppNavbar from "./components/AppNavbar/AppNavbar";
 import UserLog from "./components/UserLog/UserLog";
 import Browser from "./containers/Browser/Browser";
 import AuthenticateModal from "./containers/AuthenticateModal/AuthenticateModal";
-import { withAuthProvider } from "./session";
+import * as actions from "./store/actions";
+// import { withAuthProvider } from "./session";
 
 class App extends React.Component {
   state = {
@@ -18,6 +20,10 @@ class App extends React.Component {
     authenticated: false,
     mobileView: "browser", // state of whether log or browser is visible
   };
+
+  componentDidMount() {
+    this.props.onGetUser();
+  }
 
   toggleModal = () => {
     this.setState((state) => ({
@@ -68,4 +74,10 @@ class App extends React.Component {
   }
 }
 
-export default compose(withAuthProvider)(App);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onGetUser: () => dispatch(actions.getUser()),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(App);

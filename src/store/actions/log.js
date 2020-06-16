@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import { userLog, logAlbum } from "../../firebase";
+import axios from "axios";
 
 export const fetchLogFail = (err) => {
   return {
@@ -23,23 +23,27 @@ export const fetchLogStart = () => {
 
 export const fetchLog = (uid) => {
   return (dispatch) => {
-    console.log("yo");
     dispatch(fetchLogStart());
     if (uid === null) {
       dispatch(fetchLogSuccess([]));
     } else {
-      userLog(uid).on("value", (snapshot) => {
-        const logObj = snapshot.val();
-        console.log(logObj);
-        let fetchedAlbums;
-        if (logObj) {
-          fetchedAlbums = Object.keys(logObj)
-            .map((albumId) => ({ ...logObj[albumId], albumId: albumId }))
-            .filter((album) => !album.placeholder);
-          console.log(fetchedAlbums);
-        } else fetchedAlbums = [];
-        dispatch(fetchLogSuccess(fetchedAlbums));
-      });
+      let fetchedAlbums;
+      axios
+        .get(`http://localhost:5000/users/${uid}/log`)
+        .then((res) => {
+          if (res.data.length > 0) {
+            fetchedAlbums = res.data.map((a) => {
+              return {
+                name: a.name,
+                artist: a.artist,
+                img: a.img,
+                albumId: a._id,
+              };
+            });
+          } else fetchedAlbums = [];
+          dispatch(fetchLogSuccess(fetchedAlbums));
+        })
+        .catch((err) => dispatch(fetchLogFail(err)));
     }
   };
 };
@@ -52,7 +56,6 @@ export const addAlbumFail = (err) => {
 };
 
 export const addAlbumSuccess = (album) => {
-  console.log(album);
   return {
     type: actionTypes.ADD_ALBUM_SUCCESS,
     album: album,
@@ -67,15 +70,15 @@ export const addAlbumStart = () => {
 
 export const addAlbum = (album, uid) => {
   return (dispatch) => {
-    console.log(album);
-    let test = album;
     dispatch(addAlbumStart());
-    userLog(uid)
-      .push(test)
+    axios
+      .post(`http://localhost:5000/users/${uid}/log`, { album })
+      .then(() => {
+        dispatch(fetchLog(uid));
+      })
       .catch((err) => {
         dispatch(addAlbumFail(err));
       });
-    dispatch(fetchLog(uid));
   };
 };
 
@@ -87,7 +90,6 @@ export const removeAlbumFail = (err) => {
 };
 
 export const removeAlbumSuccess = (album) => {
-  console.log(album);
   return {
     type: actionTypes.REMOVE_ALBUM_SUCCESS,
     album: album,
@@ -103,11 +105,13 @@ export const removeAlbumStart = () => {
 export const removeAlbum = (uid, albumId) => {
   return (dispatch) => {
     dispatch(removeAlbumStart());
-    logAlbum(uid, albumId)
-      .remove()
+    axios
+      .delete(`http://localhost:5000/users/${uid}/log/${albumId}`)
+      .then(() => {
+        dispatch(fetchLog(uid));
+      })
       .catch((err) => {
         dispatch(removeAlbumFail(err));
       });
-    dispatch(fetchLog(uid));
   };
 };

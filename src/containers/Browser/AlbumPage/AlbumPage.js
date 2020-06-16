@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { compose } from "recompose";
 
 import classes from "./AlbumPage.module.css";
 
@@ -9,7 +8,6 @@ import Tracklist from "./Tracklist/Tracklist";
 import lastFmAxios from "../../../axios/lastFm";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import * as actionCreators from "../../../store/actions";
-import { withAuthConsumer } from "../../../session";
 
 import Add from "../../../assets/icons/add.svg";
 import Remove from "../../../assets/icons/remove.svg";
@@ -22,6 +20,14 @@ class AlbumPage extends Component {
     showPopover: false,
   };
 
+  checkInLog = (artist, name) => {
+    let albumInLog =
+      this.props.albums.filter(
+        (album) => artist === album.artist && name === album.name
+      ).length > 0;
+    if (albumInLog) this.setState({ inLog: true });
+  };
+
   fetchAlbumInfo = (newParams) => {
     lastFmAxios
       .get(
@@ -32,6 +38,7 @@ class AlbumPage extends Component {
       )
       .then((response) => {
         this.setState({ albumInfo: response.data.album });
+        this.checkInLog(response.data.album.artist, response.data.album.name);
       })
       .catch((error) => {
         console.log(error);
@@ -55,12 +62,6 @@ class AlbumPage extends Component {
     const newParams = Object.fromEntries(
       new URLSearchParams(this.props.location.search)
     );
-    let albumInLog =
-      this.props.albums.filter(
-        (album) =>
-          newParams.artist === album.artist && newParams.title === album.name
-      ).length > 0;
-    if (albumInLog) this.setState({ inLog: true });
     this.fetchAlbumInfo(newParams);
   }
 
@@ -73,14 +74,15 @@ class AlbumPage extends Component {
           artist: album.artist,
           img: album.image[5]["#text"],
         };
-        this.props.onAlbumAdd(albumData, this.props.authState.uid);
+        this.props.onAlbumAdd(albumData, this.props.user.id);
         this.setState({ inLog: true });
       } else {
         let album = this.state.albumInfo;
+
         let albumId = this.props.albums.filter(
           (a) => album.artist === a.artist && album.name === a.name
         )[0].albumId;
-        this.props.onAlbumRemove(this.props.authState.uid, albumId);
+        this.props.onAlbumRemove(this.props.user.id, albumId);
         this.setState({ inLog: false });
       }
     }
@@ -111,9 +113,9 @@ class AlbumPage extends Component {
                 className={
                   classes.AddRemoveButton +
                   " " +
-                  (!this.props.authState && classes.Disabled)
+                  (!this.props.user && classes.Disabled)
                 }
-                onClick={this.props.authState && this.addRemoveHandler}
+                onClick={this.props.user && this.addRemoveHandler}
                 onMouseEnter={() => {
                   this.setState({ showPopover: true });
                 }}
@@ -130,7 +132,7 @@ class AlbumPage extends Component {
                 ) : (
                   <Spinner style={{ height: "80%", width: "80%" }} />
                 )}
-                {this.state.showPopover && !this.props.authState && (
+                {this.state.showPopover && !this.props.user && (
                   <div className={classes.Popover}>
                     Create an account or sign in to add to your log!
                   </div>
@@ -148,6 +150,7 @@ class AlbumPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    user: state.auth.user,
     albums: state.log.albums,
     loading: state.log.loading,
   };
@@ -161,7 +164,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(compose(withAuthConsumer)(AlbumPage));
+export default connect(mapStateToProps, mapDispatchToProps)(AlbumPage);

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Row } from "react-bootstrap";
-import { compose } from "recompose";
+// import { compose } from "recompose";
 
 import classes from "./AuthenticateModal.module.css";
 
-import { withAuthConsumer } from "../../session";
+// import { withAuthConsumer } from "../../session";
 import Backdrop from "../../components/UI/Backdrop/Backdrop";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import * as actions from "../../store/actions";
@@ -21,7 +21,7 @@ class AuthenticateModal extends Component {
   };
 
   componentDidUpdate() {
-    if (this.props.authState) this.props.hide();
+    if (this.props.user) this.props.hide();
   }
 
   setLoggingIn = (newState) => {
@@ -144,6 +144,7 @@ class AuthenticateModal extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    user: state.auth.user,
     error: state.auth.error,
     loading: state.auth.loading,
   };
@@ -156,7 +157,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(compose(withAuthConsumer)(AuthenticateModal));
+export default connect(mapStateToProps, mapDispatchToProps)(AuthenticateModal);

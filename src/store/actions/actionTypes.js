@@ -6,6 +6,9 @@ export const AUTH_START = "AUTH_START";
 export const AUTH_SUCCESS = "AUTH_SUCCESS";
 export const AUTH_FAIL = "AUTH_FAIL";
 
+export const GET_USER_START = "GET_USER_START";
+export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
+
 export const FETCH_LOG_START = "FETCH_LOG_START";
 export const FETCH_LOG_SUCCESS = "FETCH_LOG_SUCCESS";
 export const FETCH_LOG_FAIL = "FETCH_LOG_FAIL";

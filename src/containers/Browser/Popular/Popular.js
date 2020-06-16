@@ -4,7 +4,7 @@ import classes from "./Popular.module.css";
 
 import PopularRow from "./PopularRow/PopularRow";
 
-const POPULAR_CATEGORIES = ["Indie", "Pop", "Hip-Hop", "Electronic"];
+const POPULAR_CATEGORIES = ["Indie", "Classical", "Jazz", "Electronic"];
 
 class Popular extends Component {
   shouldComponentUpdate() {

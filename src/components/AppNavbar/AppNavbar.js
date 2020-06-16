@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
-import { compose } from "recompose";
+// import { compose } from "recompose";
 
 import classes from "./AppNavbar.module.css";
 
 import AccountButton from "./AccountButton/AccountButton";
 import HamburgerItem from "./HamburgerItem/HamburgerItem";
 import * as actionCreators from "../../store/actions";
-import { withAuthConsumer } from "../../session";
+// import { withAuthConsumer } from "../../session";
 
 import Logo from "../../assets/images/logo.svg";
 import HamburgerIcon from "../../assets/icons/hamburger.svg";
@@ -69,7 +69,7 @@ class AppNavbar extends Component {
             clicked={() => this.itemClicked("browser")}
           />
 
-          {this.props.authState ? (
+          {this.props.user ? (
             <>
               <HamburgerItem
                 content="[Logout]"
@@ -108,13 +108,16 @@ class AppNavbar extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     onLogout: () => dispatch(actionCreators.logout()),
   };
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(compose(withAuthConsumer)(AppNavbar));
+export default connect(mapStateToProps, mapDispatchToProps)(AppNavbar);

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
-import { compose } from "recompose";
 
 import classes from "./UserLog.module.css";
 
@@ -9,17 +8,16 @@ import EmptyLog from "./EmptyLog/EmptyLog";
 import Album from "../Album/Album";
 import * as actionCreators from "../../store/actions";
 import Spinner from "../UI/Spinner/Spinner";
-import { withAuthConsumer } from "../../session";
 
 class UserLog extends Component {
   componentDidUpdate() {
-    this.props.onFetchLog(this.props.authState && this.props.authState.uid);
+    this.props.onFetchLog(this.props.user && this.props.user.id);
   }
 
   shouldComponentUpdate(nextProps) {
     return (
       nextProps.albums.length !== this.props.albums.length ||
-      nextProps.authState !== this.props.authState
+      nextProps.user !== this.props.user
     );
   }
 
@@ -59,6 +57,7 @@ class UserLog extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    user: state.auth.user,
     albums: state.log.albums,
     error: state.log.error,
     loading: state.log.loading,
@@ -71,7 +70,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(compose(withAuthConsumer)(UserLog));
+export default connect(mapStateToProps, mapDispatchToProps)(UserLog);
